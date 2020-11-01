@@ -1,14 +1,22 @@
 //apex-line-column.js
-
-function dynamicallyLoadScript(url) {
+var dfjs, ApexCharts; //防止編輯器告警
+function load(url) {
   var script = document.createElement("script"); // create a script DOM node
   script.src = url; // set its src to the provided URL
   document.head.appendChild(script); // add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
 }
-dynamicallyLoadScript("https://cdn.jsdelivr.net/npm/apexcharts");
+function jsonp_callback(data) {
+  console.log("002");
+  console.dir(data);
+}
+load(
+  "https://ap5.ragic.com/cameomotion/config-apex-line-column/2?api&listing&callback=jsonp_callback"
+);
+load("https://cdn.jsdelivr.net/npm/apexcharts");
 
 class ApexLineColumn extends HTMLElement {
   connectedCallback() {
+    console.log("001");
     this.str_random_id = "id_" + Math.random().toString(36).substr(2, 9);
     this.innerHTML = `
       <style>
