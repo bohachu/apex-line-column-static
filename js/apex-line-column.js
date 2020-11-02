@@ -5,9 +5,12 @@ function load(url) {
   script.src = url; // set its src to the provided URL
   document.head.appendChild(script); // add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
 }
+
+var dic_jsonp; //先從 ragic 拿到資料之後才呼叫 ApexLineColumn
 function jsonp_callback(data) {
-  console.log("002");
-  console.dir(data);
+  console.log("should 001");
+  dic_jsonp = data;
+  customElements.define("apex-line-column", ApexLineColumn);
 }
 load(
   "https://ap5.ragic.com/cameomotion/config-apex-line-column/2?api&listing&callback=jsonp_callback"
@@ -16,7 +19,8 @@ load("https://cdn.jsdelivr.net/npm/apexcharts");
 
 class ApexLineColumn extends HTMLElement {
   connectedCallback() {
-    console.log("001");
+    console.log("should 002");
+    console.log(dic_jsonp);
     this.str_random_id = "id_" + Math.random().toString(36).substr(2, 9);
     this.innerHTML = `
       <style>
@@ -172,4 +176,3 @@ class ApexLineColumn extends HTMLElement {
     chart.render();
   }
 }
-customElements.define("apex-line-column", ApexLineColumn);
